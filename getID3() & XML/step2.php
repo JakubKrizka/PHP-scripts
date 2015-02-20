@@ -1,18 +1,18 @@
 <?php
 include 'lib/csfd/global.php';
 
-// HLEDAT
+// získání post promenné + uprava znaku mezery
 $videoname = $_POST['videoname'];
 $csfdname = $_POST['csfdname'];
 $csfdnamesearch = str_replace(" ", "+", $csfdname);
 
+// vyhledání názvu v aplikaci csfd
 logAction('HLEDAT: '.$csfdnamesearch);
 $html = file_get_html('http://www.csfd.cz/hledat/?q='.$csfdnamesearch);
-
 $filmy = '';
-
 $i = 0;
 
+// dosazení výsledku
 foreach( $html->find('#search-films li') as $film_html){
 	$i++;
 	$film = str_get_html($film_html);
@@ -79,30 +79,28 @@ if(!$filmy AND $html->find('#pg-film', 0)){
 		</script>
 	</head>
 	<body>
-	<a href="http://jakubkrizka.php5.cz"><button class="home_button">Domovská stránka</button></a><hr>
-	<a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
-			<input type="text" name="videoname" id="videoname" value="<?php echo $videoname; ?>" disabled/>
-			<br>
-			<input type="text" name="csfdname" id="csfdname" value="<?php echo $csfdname; ?>" disabled/>
-			<hr>
+		<a href="http://jakubkrizka.php5.cz"><button class="home_button">Domovská stránka</button></a><hr>
+		<a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+		<input type="text" name="videoname" id="videoname" value="<?php echo $videoname; ?>" disabled/>
+		<br>
+		<input type="text" name="csfdname" id="csfdname" value="<?php echo $csfdname; ?>" disabled/>
+		<hr>
 			<?php
+				// výpis
 				foreach($filmy as $film){
-								echo '<form action="step3.php" method="post">';
-								echo '<a target="_blank" href="http://www.csfd.cz/film/'.$film['id'].'">'.$film['nazev'].' ('.$film['rok'].') '.$film['typ'].'</a>';
-
-								echo '<input name="csfdid" id="hide" value="'.$film['id'].'"/>';
-                echo '<input name="videoname" id="hide" value="'.$videoname.'"/>';
-                echo '<input name="csfdname" id="hide" value="'.$csfdname.'"/>';
-                echo '<input name="csfdrok" id="hide" value="'.$film['rok'].'"/>';
-                echo '<input value="http://www.csfd.cz/film/'.$film['id'].'" name="odeslane_csfd" id="hide"/>';
-																echo '<br>';
-								echo '<button type="submit" id="'.$film['id'].'">Pokračovat</button>';
-                echo '</form>';
-								echo '<hr>';
-    		}
-										
-	?>
-		</form>
+					echo '<form action="step3.php" method="post">';
+					echo '<a target="_blank" href="http://www.csfd.cz/film/'.$film['id'].'">'.$film['nazev'].' ('.$film['rok'].') '.$film['typ'].'</a>';
+					echo '<input name="csfdid" id="hide" value="'.$film['id'].'"/>';
+	                echo '<input name="videoname" id="hide" value="'.$videoname.'"/>';
+    	            echo '<input name="csfdname" id="hide" value="'.$csfdname.'"/>';
+        	        echo '<input name="csfdrok" id="hide" value="'.$film['rok'].'"/>';
+            	    echo '<input value="http://www.csfd.cz/film/'.$film['id'].'" name="odeslane_csfd" id="hide"/>';
+					echo '<br>';
+					echo '<button type="submit" id="'.$film['id'].'">Pokračovat</button>';
+                	echo '</form>';
+					echo '<hr>';
+    			}
+			?>
 		<div id="help"><a href="http://php.net/" target="_blank"><img src="http://php.net/images/logos/php-power-white.png"></a></div>
 	</body>
 </html>

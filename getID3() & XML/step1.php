@@ -1,7 +1,5 @@
-<!doctype html>
 <html>
 	<head>
-
 		<title>Step 1</title>
 		<script src="lib/jquery/jquery-1.11.1.min.js"></script>
 		<script src="lib/jquery/jquery-ui.js"></script>
@@ -12,38 +10,46 @@
 		<link rel="shortcut icon" href="http://php.net/images/logos/php_xpstyle.ico" type="image/ico">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<style>
-			.ui-autocomplete {
-			   font-family: 'Coming Soon', cursive;
-			   font-size: 26px;
-				/* width: 245px;
-				max-height: 250px;
-				 prevent horizontal scrollbar */
-				overflow-x: hidden;
+			body, input, button {
+				font-size: 26px;
 			}
 			p, li {
 			   font-family: 'Comfortaa', cursive;
-				font-size: 26px;
+			   font-size: 26px;
 			}
 			input {
 			   font-family: 'Coming Soon', cursive;
-			   font-size: 26px;
 				text-align: left;
-				-webkit-transition: width 0.6s;
-				-moz-transition: width 0.6s;
 				transition: width 0.6s;
 				width: 250px;
 				min-width: 250px;
 			}
 			button  {
 			   font-family: 'Comfortaa', cursive;
-			   font-size: 26px;
 				text-align: center;
 				width: 254px;
 			}
-			#help {
-			  position: fixed;
-			  bottom: 0;
-			  right:0;
+			.logo {
+				position: fixed;
+				bottom: 0;
+				right:0;
+			}
+			.support li {
+				font-size: 13px;
+				margin-left: 9px;
+			}
+			.support {
+				font-family: 'Coming Soon', cursive;
+				font-size: 13px;
+				position: fixed;
+				bottom: 33px;
+				right:0;
+				margin-right: 6px;
+			}
+			.ui-autocomplete {
+			   font-family: 'Coming Soon', cursive;
+				/* prevent horizontal scrollbar */
+				overflow-x: hidden;
 			}
 		</style>
 		<script>
@@ -101,7 +107,15 @@
 		?>
 		</p>
 		<p><a href="http://goo.gl/lNahXl">Zdroj</a></p>
-		<div id="help"><a href="http://php.net/" target="_blank"><img src="http://php.net/images/logos/php-power-white.png"></a></div>
+		<div class="support">
+			Podporované verze:<br>
+			<li>Chrome (>v27)</li>
+			<li>Firefox (>v10)</li>
+			<li>Opera (>v11)</li>
+			<li>Safary (>v5)</li>
+			<li>IE (>10)</li>
+		</div>
+		<div class="logo"><a href="http://php.net/" target="_blank"><img src="http://php.net/images/logos/php-power-white.png"></a></div>
 
 	</body>
 </html>
