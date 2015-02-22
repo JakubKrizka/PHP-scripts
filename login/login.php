@@ -11,11 +11,11 @@ if (!empty($_POST["loginname"]) && !empty($_POST["loginpass"])) {
   
   // define mysql login information
   // nastavení přístupu do databáze (adresa, uživatel, heslo)
-  $id_spojeni = mysql_connect("localhost","czjakubkrizka","DD89F17CBF");
+  $id_spojeni = mysql_connect("localhost","user","password");
   
   // select database 
   // výběr databáze
-  $vysledek_vybrani = mysql_select_db("czjakubkrizka",$id_spojeni);
+  $vysledek_vybrani = mysql_select_db("database",$id_spojeni);
   
   // send request to mysql !!! this is unsecure solution, injection isn't resolved !!!
   // odeslání požadavku na databázový server, kde se hledá v tabulce "users" uživatel jako "id"
@@ -86,7 +86,11 @@ if (!empty($_POST["loginname"]) && !empty($_POST["loginpass"])) {
     </script>
   <?php  
   }  
-} else
+} 
+
+  // if is not isset needed input fields
+  // pokud nejsou vyplněna povinná pole
+  else
   ?>
     <script type="text/javascript">
     

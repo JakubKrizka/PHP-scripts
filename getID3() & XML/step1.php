@@ -1,21 +1,15 @@
 <html>
 	<head>
 		<title>Step 1</title>
-		<script src="lib/jquery/jquery-1.11.1.min.js"></script>
-		<script src="lib/jquery/jquery-ui.js"></script>
-		<script src='lib/jquery/autosizeinput.js'></script>
-		<link rel="stylesheet" href="lib/jquery/jquery-ui.css">
-		<link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Comfortaa:700' rel='stylesheet' type='text/css'>
-		<link rel="shortcut icon" href="http://php.net/images/logos/php_xpstyle.ico" type="image/ico">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<?php
+			include('head.html');
+		?>
 		<style>
-			body, input, button {
+			body, input, button, p, li, a {
 				font-size: 26px;
 			}
-			p, li {
+			p, li, a {
 			   font-family: 'Comfortaa', cursive;
-			   font-size: 26px;
 			}
 			input {
 			   font-family: 'Coming Soon', cursive;
@@ -27,24 +21,7 @@
 			button  {
 			   font-family: 'Comfortaa', cursive;
 				text-align: center;
-				width: 254px;
-			}
-			.logo {
-				position: fixed;
-				bottom: 0;
-				right:0;
-			}
-			.support li {
-				font-size: 13px;
-				margin-left: 9px;
-			}
-			.support {
-				font-family: 'Coming Soon', cursive;
-				font-size: 13px;
-				position: fixed;
-				bottom: 33px;
-				right:0;
-				margin-right: 6px;
+				width: 250px;
 			}
 			.ui-autocomplete {
 			   font-family: 'Coming Soon', cursive;
@@ -54,8 +31,12 @@
 		</style>
 		<script>
 		$(function() {
+			// define autocomplete variables
+			// definování proměných automatického doplňování 
 			var availableTags = [
 				<?php
+					// show all video files
+					// výpis video souborů
 					foreach (glob("*.webm") as $vypis) {
 						echo '"'.$vypis.'",';
 					}
@@ -70,27 +51,35 @@
 					}
 				?>
 			];
+			// set auto-complete input
+			// nastavení automatického doplňování neboli předdefinované návrhy
 			$( "#videoname" ).autocomplete({
 				source: availableTags
 			});
+			// set autosize input
+			// nastavení automatického zvěthování pole s přibýjacím počtem znaků
 			$(videoname).autosizeInput();
 			$(csfdname).autosizeInput();
 		});
 		</script>
 	</head>
 	<body>
-<a href="http://jakubkrizka.php5.cz"><button class="home_button">Domovská stránka</button></a><hr>
-	<a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+		<?php
+			include("top.html");
+		?>
+		<!-- Form -->
 		<form action="step2.php" method="post">
 			<input type="text" name="videoname" id="videoname" placeholder="Název souboru..."/>
 			<br>
 			<input type="text" name="csfdname" id="csfdname" autocomplete="off" placeholder="Název filmu..."/>
 			<br>
-			<button type="submit">Pokračovat</button>
+			<button type="submit">Pokračovat <i class="fa fa-angle-double-right"></i></button>
 		</form>
 		<hr>
 		<p>
-         <?php
+		<?php
+			// show all video files
+			// výpis video souborů
 			echo 'Video soubory: <br>';
 			foreach (glob("*.webm") as $vypis) {
 				echo '<li>'.$vypis.'</li>';
@@ -105,17 +94,11 @@
 				echo '<li>'.$vypis.'</li>';
 			}
 		?>
+		<hr>
+			<a href="http://goo.gl/lNahXl">Zdroj</a>
 		</p>
-		<p><a href="http://goo.gl/lNahXl">Zdroj</a></p>
-		<div class="support">
-			Podporované verze:<br>
-			<li>Chrome (>v27)</li>
-			<li>Firefox (>v10)</li>
-			<li>Opera (>v11)</li>
-			<li>Safary (>v5)</li>
-			<li>IE (>10)</li>
-		</div>
-		<div class="logo"><a href="http://php.net/" target="_blank"><img src="http://php.net/images/logos/php-power-white.png"></a></div>
-
+		<?php
+			include('bottom.html');
+		?>
 	</body>
 </html>

@@ -1,30 +1,20 @@
 <html>
 	<head>
-		<title>Upload - Step 3</title>
+		<title>Step 3</title>
 		<link rel="stylesheet" href="lib/jquery/jquery-ui.css">
-		<script src="lib/jquery/jquery-1.11.1.min.js"></script>
-		<script src="lib/jquery/jquery-ui.js"></script>
-		<script src='lib/jquery/autosizeinput.js'></script>
 		<script src='lib/jquery/jquery.autosize.js'></script>
-		<link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Comfortaa:700' rel='stylesheet' type='text/css'>
-		<link rel="shortcut icon" href="http://php.net/images/logos/php_xpstyle.ico" type="image/ico">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <?php
+			include('head.html');
+		?>
 		<style type="text/css">
 			body {
 				font-family: 'Comfortaa', cursive;
 			}
-			/*vycentrovanie*/
+			/*vycentrovani*/
 			#all {
                 width: 800px;
                 margin: 0 auto; 
             }
-            /*logo*/
-			#help {
-		        position: fixed;
-		        bottom: 0;
-			    right:0;
-			}
             textarea {
                 font-family: 'Roboto', sans-serif;
                 font-size: 19px;
@@ -41,7 +31,7 @@
               	transition: height 0.9s;
             }
             fieldset {
-        		border: 2px solid #ccc;	
+                border: 2px solid #ccc;	
 			}
             th {
                 text-align: left;
@@ -54,24 +44,18 @@
 			input {
 				text-align: center;
 				font-family: 'Coming Soon', cursive;
-    			font-size: 24px;
-    			width: 100%;
-    			text-align: center;
-    			border: 2px solid #ccc;
-			}
-    		button  {
-                font-family: 'Comfortaa', cursive;
-                font-size: 26px;
-			    text-align: center;
-				width: 254px;
+                font-size: 24px;
+                width: 100%;
+                border: 2px solid #ccc;
 			}
 		</style>
 	</head>
 	<body>
-	    <a href="http://jakubkrizka.php5.cz"><button class="home_button">Domovská stránka</button></a><hr>
-	    <div id="all">
-	    <a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
-
+        <?php
+			include("top.html");
+		?>
+        <div id="all">
+	    
 <!-------------------------------------------------------------------------------------
 getID3() by James Heinrich <info@getid3.org>
 available at http://getid3.sourceforge.net
@@ -116,35 +100,25 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     $user = $_POST['user'];
     $password = $_POST['password'];
     $id = $_POST['csfdid'];
-    
     $FullFileName = $_POST["videoname"];
-
     // kontrola id
     if(!$id){ exit; }
-
     // načtení externích knihoven csfd & getid3
     include 'lib/csfd/global.php';
     require_once('lib/getid3/getid3.php');
-
     // inicializace tagu
     $getID3 = new getID3;
-    
     // analyzuj video
     $ThisFileInfo = $getID3->analyze($FullFileName);
-    
     // info hoď do komentu
     getid3_lib::CopyTagsToComments($ThisFileInfo);
-    
     // hlavně nazapomenout na kódování
     $ThisFileInfo->$encoding="UTF-8";
-    
     // toto netuším :D nějaký log
     logAction('FILM: '.$id);
-    
     // získání kontréntních informací
     $film_html = getUrl('http://www.csfd.cz/film/'.$id, $sessionid, $user);
     $html = str_get_html($film_html);
-    
     // INFO
     $info = $html->find('.info', 0);
     $nazev_cz = strip_tags( trim( $info->find('h1', 0)->innertext ) );
@@ -152,27 +126,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     $zanr = $info->find('.genre', 0)->innertext;
     $zeme = $info->find('.origin', 0)->innertext;
     $zeme = str_replace("&#039;", "'", $zeme);
-
     foreach($info->find('div') as $tvurci_html){
       $tvurci_array = csfdFilmTvurci($tvurci_html);
       $tvurci_typ = $tvurci_array['typ'];
       $tvurci[$tvurci_typ] = $tvurci_array['tvurci'];
     }
-
     $rating = csfdFilmRating( $html->find('#rating .average', 0)->innertext );
-    
     $obsah = trim( strip_tags( @$html->find('#plots li', 0)->plaintext ) );
     $obsah = str_replace('&nbsp;', ' ', $obsah);
     $obsah = str_replace('&', '&amp;', $obsah);
-    
     $obrazek = trim( $html->find('#poster img', 0)->src );
-    
     $trailer_class = $html->find('.videos', 0)->class;
     $trailer = strstr($trailer_class, "disabled") ? 0 : 1;
-    
     $galerie_class = $html->find('.photos', 0)->class;
     $galerie = strstr($galerie_class, "disabled") ? 0 : 1;
-    
     // KOMENTARE
     $komentare = null;
     $i=0;
@@ -186,7 +153,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         //$text = htmlspecialchars($text);
         $text = str_replace("&", "&amp;", $text);
         $komentare[$i]['text'] = $text;
-    
         $rating_e = $komentar_dom->find('.rating', 0);
         if($rating_e){
           $rating_star = intval( strlen( @$komentar_dom->find('img.rating', 0)->alt ) );
@@ -196,15 +162,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         $komentare[$i]['rating'] = $rating_star;
       }
     }
-    
     // TOKEN
     $token = @$html->find("#my-rating input[name=_token_]", 0)->value;
-    
     // DELETE TOKEN
     $delete_link = @$html->find("#my-rating .private", 0)->href;
     preg_match("@token=(.+)&@", $delete_link, $delete_parts);
     $delete_token = isset($delete_parts[1]) ? $delete_parts[1] : null;
-    
     // MY RATING
     $mystars = $html->find("#my-rating .my-rating img");
     $myrating = count($mystars);
@@ -212,10 +175,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       $isodpad = @$html->find("#my-rating .rating", 0)->plaintext;
       if($isodpad=="odpad!"){$myrating=0;}else{$myrating='';}
     }
-    
     // LOGIN
     $login = @csfdId( @$html->find("#user-menu a", 0).href );
-    
     // relogin
     if(!$login && $sessionid && $password){
       $logintext = file_get_contents($dirpath."login.php?user=$user&password=$password");
@@ -224,26 +185,21 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       header("location:$dirpath"."film.php?id=$id&user=$user&password=$password&sessionid=$sessionid");
       exit;
     }
-
     echo '<form 
              method="post" 
              action="step4.php"
           >';
-    
-    		
     echo '<table border="0" cellspacing="0" cellpadding="3">';
     echo '<tr>
           <th 
              colspan="2" 
              id="celek"
           >';
-    
     echo '<fieldset id="zaklinfo">';
     echo '<legend>
              Základní informace
           </legend>
           ';
-          
     echo 'Cesta k souboru:
           <br>
           <input 
@@ -253,7 +209,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              value="'.htmlentities($ThisFileInfo['filenamepath']).'"
           />
           <br><br>';
-          
     echo 'Český název:
           <br>
           <input 
@@ -263,7 +218,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              value="'.$nazev_cz.'"
           />
           <br><br>';
-          
     echo 'Originální název:
           <br>
           <input 
@@ -273,7 +227,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              value="'.$nazev_orig.'"
           />
           <br><br>';
-          
     echo 'Velikost:
           <br>
           <input 
@@ -284,7 +237,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              value="'.htmlentities(!empty($ThisFileInfo['filesize'])?round($ThisFileInfo['filesize'] / 1000000).' MB' : chr(160)).'" 
           />
           <br><br>';
-          
     echo 'Délka:
           <br>
           <input 
@@ -295,7 +247,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              value="'.htmlentities(!empty($ThisFileInfo['playtime_string'])?$ThisFileInfo['playtime_string'] : chr(160)).'"
           />
           <br><br>';
-    
     echo 'Formát:
           <br>
           <input 
@@ -306,7 +257,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              value="'.htmlentities($ThisFileInfo['fileformat']).'"
           />
           <br><br>';
-    
     echo 'Celkové Bitrate:
           <br>
           <input 
@@ -319,15 +269,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           <br><br>';
     echo '</fieldset>';
     echo '</th></tr>';
-    
     echo '<tr>
           <th>
           <fieldset>
              <legend>
-                Video
+                <i class="fa fa-file-video-o fa-2x"></i>
              </legend>
           ';
-    
     echo 'Format:
           <br>
           <input 
@@ -340,7 +288,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           <br>
           <br>
           ';
-          
     echo 'Bitrate:
           <br>
           <input 
@@ -353,7 +300,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           <br>
           <br>
           ';
-          
     echo 'Rozlišení:
           <br>
           <input 
@@ -366,7 +312,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           <br>
           <br>
           ';
-          
     echo 'Snímků za vteřinu:
           <br>
           <input 
@@ -379,16 +324,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           <br>
           <br>
           ';
-    		
     echo '</fieldset>';
     echo '</th>
           <th>
           <fieldset>
              <legend>
-                Audio
+                <i class="fa fa-file-audio-o fa-2x"></i>
              </legend>
           ';
-          
     echo 'Format: 
           <br>
           <input 
@@ -401,7 +344,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           <br>
           <br>
           ';
-         
     echo 'Bitrate:
           <br>
           <input 
@@ -414,7 +356,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           <br>
           <br>
           ';
-       
     echo 'Nastavení kanálů:
           <br>
           <input 
@@ -427,7 +368,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           <br>
           <br>
           ';
-          
     echo 'Vzorkovací frekvence:
           <br>
           <input 
@@ -440,9 +380,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           <br>
           <br>
           ';
-    
     echo '</fieldset></th></tr>';
-    
     echo '<tr>
           <th 
              colspan="2" 
@@ -450,10 +388,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     
     echo '<fieldset>';
     echo '<legend>
-             CSFD
+            <i class="fa fa-file-text-o fa-2x"></i>
           </legend>
           ';
-          
     echo 'Odkaz:
           <br>
           <input 
@@ -462,8 +399,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              name="odeslane_csfd" 
              value="'.$odeslane_csfd.'"
           />
-          <br><br>';
-          
+          <br><br>
+          ';
     echo 'Rok:
           <br>
           <input 
@@ -472,8 +409,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              name="odeslane_rok" 
              value="'.$csfdrok.'"
           />
-          <br><br>';
-    
+          <br><br>
+          ';
     echo 'Žánr:
           <br>
           <input 
@@ -482,184 +419,30 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              name="odeslane_zanr" 
              value="'.$zanr.'"
           />
-          <br><br>';
-    
+          <br><br>
+          ';
     echo 'Popis:
-    <br>
+            <br>
           <textarea 
              placeholder="Popis..."
              id="odeslane_popis"
              name="odeslane_popis" 
-          >'.$obsah.'</textarea>';
-    
+          >'.$obsah.'
+          </textarea>
+          ';
     echo '</fieldset></th></tr>';
     echo '</table>';
     echo '<br>';
     echo '<br>';
     echo '</form>';
+    include('bottom.html');
 ?>
-        <div id="help"><a href="http://php.net/" target="_blank"><img src="http://php.net/images/logos/php-power-white.png"></a></div>
     </div>
 </body>
 <script>
-		$(function() {
-			var availableTags = [
-				"ab",
-				"aa",
-				"af",
-				"sq",
-				"am",
-				"ar",
-				"an",
-				"hy",
-				"as",
-				"ay",
-				"az",
-				"ba",
-				"eu",
-				"bn",
-				"dz",
-				"bh",
-				"bi",
-				"br",
-				"bg",
-				"my",
-				"be",
-				"km",
-				"ca",
-				"zh",
-				"co",
-				"hr",
-				"cs",
-				"da",
-				"nl",
-				"en",
-				"eo",
-				"et",
-				"fo",
-				"fa",
-				"fj",
-				"fi",
-				"fr",
-				"fy",
-				"gl",
-				"gd",
-				"gv",
-				"ka",
-				"de",
-				"el",
-				"kl",
-				"gn",
-				"gu",
-				"ht",
-				"ha",
-				"he",
-				"iw",
-				"hi",
-				"hu",
-				"is",
-				"io",
-				"id",
-				"in",
-				"ia",
-				"ie",
-				"iu",
-				"ik",
-				"ga",
-				"it",
-				"ja",
-				"jv",
-				"kn",
-				"ks",
-				"kk",
-				"rw",
-				"ky",
-				"rn",
-				"ko",
-				"ku",
-				"lo",
-				"la",
-				"lv",
-				"li",
-				"ln",
-				"lt",
-				"mk",
-				"mg",
-				"ms",
-				"ml",
-				"mt",
-				"mi",
-				"mr",
-				"mo",
-				"mn",
-				"na",
-				"ne",
-				"no",
-				"oc",
-				"or",
-				"om",
-				"ps",
-				"pl",
-				"pt",
-				"pa",
-				"qu",
-				"rm",
-				"ro",
-				"ru",
-				"sm",
-				"sg",
-				"sa",
-				"sr",
-				"sh",
-				"st",
-				"tn",
-				"sn",
-				"ii",
-				"sd",
-				"si",
-				"ss",
-				"sk",
-				"sl",
-				"so",
-				"es",
-				"su",
-				"sw",
-				"sv",
-				"tl",
-				"tg",
-				"ta",
-				"tt",
-				"te",
-				"th",
-				"bo",
-				"ti",
-				"to",
-				"ts",
-				"tr",
-				"tk",
-				"tw",
-				"ug",
-				"uk",
-				"ur",
-				"uz",
-				"vi",
-				"vo",
-				"wa",
-				"cy",
-				"wo",
-				"xh",
-				"yi",
-				"ji",
-				"yo",
-				"zu"
-			];
-			$( "#jazyk" ).autocomplete({
-				source: availableTags
-			});
-            $(function(){
-                $('textarea').autosize();
-    		});
-    	});
+    $(function(){
+        $('textarea').autosize();
+    });
 	</script>
 </html>
 
