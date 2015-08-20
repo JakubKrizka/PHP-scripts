@@ -3,38 +3,30 @@
 // check if isset required POST information
 // kontrola povinných údajů z formuláře POST
 if (!empty($_POST["loginname"]) && !empty($_POST["loginpass"])) {
-  
   // define POST variabley, we can define niminum conditions or terms
   // definice proměných, můžeme dále nastavit povinnou délkou nebo zakázat speciální znaky
   $loginname=$_POST["loginname"];
   $loginpass=$_POST["loginpass"];
-  
   // define mysql login information
   // nastavení přístupu do databáze (adresa, uživatel, heslo)
   $id_spojeni = mysql_connect("localhost","user","password");
-  
   // select database 
   // výběr databáze
   $vysledek_vybrani = mysql_select_db("database",$id_spojeni);
-  
   // send request to mysql !!! this is unsecure solution, injection isn't resolved !!!
   // odeslání požadavku na databázový server, kde se hledá v tabulce "users" uživatel jako "id"
   // POZOR !!! není vyřešena bezpečnost
   $select = mysql_query("SELECT * from users where id = '$loginname'");
-  
   // define result
   // definování výsledku, přiřazení proměných
   $result=MySQL_Fetch_Array($select);
   $pass=$result["pass"];
-  
   // define number od result
   // vrátí počet výsledků
   $control=mysql_num_rows($select);
-  
   // must be only one user
   // podmínka, musí být pouze jeden výsledek
-  if ($control == 1) {
-      
+  if ($control == 1) { 
     // check if agrees password
     // kontrola jestli sedí heslo
     if ($pass == $loginpass) {
@@ -51,7 +43,6 @@ if (!empty($_POST["loginname"]) && !empty($_POST["loginpass"])) {
       </script>
     <?php
     }
-    
     // if pass fail
     // pokud heslo nesouhlasíí
     else {
@@ -69,7 +60,6 @@ if (!empty($_POST["loginname"]) && !empty($_POST["loginpass"])) {
     <?php
     }
   }
-
   // if user do not exist or more result
   // pokud nebyl vrácen jeden výsledek nebo výsledků více
   else {
@@ -86,8 +76,7 @@ if (!empty($_POST["loginname"]) && !empty($_POST["loginpass"])) {
     </script>
   <?php  
   }  
-} 
-
+}
   // if is not isset needed input fields
   // pokud nejsou vyplněna povinná pole
   else

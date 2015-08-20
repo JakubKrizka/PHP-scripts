@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--[if IE]><script>alert("tento prohlížeč fakt ne");</script><![endif]-->
+    <title>Email</title>
+    <meta name="description" content="Odesílání emailu"/>
+    <link rel="shortcut icon" href="http://php.net/images/logos/php_xpstyle.ico" type="image/ico">
+    <style>
+      body {
+        background-color: black;
+        color: white;
+      }
+      form {
+        margin: auto;
+        text-align: center;  
+        width: 400px;
+      }
+
+      fieldset {
+        width: 400px;
+        padding: 2em 1em;
+        /* define border radius for chrome, firefox, opera, IE, safary */
+        border-width: 1px; 
+        border-style: solid; 
+        border-color: gold;
+        border-radius: 15px;
+        -moz-border-radius: 15px; 
+        -webkit-border-radius: 15px;
+        margin: auto;
+        text-align: center;
+      }
+
+      legend {
+        padding: 0.2em 0.5em;
+        border-width: 1px; 
+        border-style: solid; 
+        border-color: gold;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px; 
+        border-radius: 7px;
+        color:white
+        }
+
+      /* define css only for input type="text" */
+      input[type=text] {
+        font-family: myfont;
+        font-size: 30px;
+        height: 40px;
+        width: 300px;
+        border-width: 2px;  
+        border-color: gold;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px; 
+        border-radius: 7px;
+        text-align: center;
+        background-color: black;
+        color: white;
+        text-shadow: 0 0 6px gold;   
+      }
+
+      /* define css after mouse click this: */
+      input[type=text]:focus {
+        background-color: black;
+        border-color: white;
+        color: white;
+        text-shadow: 0 0 0px white;
+        -webkit-box-shadow: 0px 0px 20px white;
+        -moz-box-shadow: 0px 0px 20px white; 
+        box-shadow: 0px 0px 20px white;
+      }
+
+      /* define css after mouse over this: */
+      input:hover {     
+        -webkit-box-shadow: 0px 0px 20px white;
+        -moz-box-shadow: 0px 0px 20px white; 
+        box-shadow: 0px 0px 20px white;   
+        cursor:  pointer; 
+      }
+
+      input[type=password] {
+        font-family: myfont;
+        font-size: 33px;
+        height: 40px;
+        width: 300px;
+        border-width: 2px;  
+        border-color: gold;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px; 
+        border-radius: 7px;
+        text-align: center;
+        background-color: black;
+        color: white;
+        text-shadow: 0 0 6px gold;    
+      }
+
+      input[type=password]:focus {
+        background-color: black;
+        border-color: white;
+        color: white;
+        text-shadow: 0 0 0px white;
+        -webkit-box-shadow: 0px 0px 20px white;
+        -moz-box-shadow: 0px 0px 20px white; 
+        box-shadow: 0px 0px 20px white;
+      }
+
+      input[type=submit] {
+        font-family: myfont;
+        font-size: 30px;
+        height: 42px;    
+        border-width: 2px;  
+        border-color: gold;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px; 
+        border-radius: 7px;
+        text-align: center;
+        background-color: black;
+        color: gold;
+        text-shadow: 0 0 6px gold; 
+      }
+
+      input[type=submit]:focus {
+        background-color: black;
+        border-color: white;
+        color: white;
+        text-shadow: 0 0 0px white;
+        -webkit-box-shadow: 0px 0px 20px white;
+        -moz-box-shadow: 0px 0px 20px white; 
+        box-shadow: 0px 0px 20px white;   
+      }
+    </style>
+  </head>
+  <body>
+    <p><b>Uživatelské jméno:</b> test</p>
+    <p><b>Heslo:</b> demo</p>
+    <form action="login.php" method="post">
+    	<fieldset>
+        <legend>Přihlášení</legend>
+        <input type="text" name="loginname" placeholder="Uživatelké jméno"/>
+        <br><br> 
+        <input type="password" name="loginpass" placeholder="Heslo"/>
+        <br><br>
+        <input type="submit" value="Přihlásit se"/>
+      </fieldset>
+    </form>
+    <p>Použití jednoduchého přihlášení pomocí kontroly údajů v databázi.</p>
+    <p>Chybí bezpečnostní prvky jako "captcha code" při opakovaných spojení nebo prevence SQL injection a další...</p> 
+    <p>Při řešení bezpčnostních prvků jsem přešel na chytřejší jazyk.</p>
+  </body>
+</html>
