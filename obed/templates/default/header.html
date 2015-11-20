@@ -1,0 +1,39 @@
+<body>
+    <!-- Google Tag Manager -->
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5R4J8D"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXX');</script>
+    <!-- End Google Tag Manager -->
+	<header>
+		<a id="home-button" href="?page=home">
+            <i class="fa fa-5x fa-home<?php if (!$_GET["page"] || $_GET["page"] == "home") { echo ' selected-icon'; } ?>"></i>
+		</a>
+		<ul>
+			<li>
+				<a href="?page=racek">
+                	<img src="assets/img/racek.jpg" alt="Racek" <?php if ($_GET["page"] == "racek") { echo 'class="selected"'; } ?>/>
+				</a>
+                </li>
+                <li>
+                    <a href="?page=klub-cestovatelu">
+                       <img src="assets/img/klub-cestovatelu.jpg" alt="Klub cestovatelů" <?php if ($_GET["page"] == "klub-cestovatelu") { echo 'class="selected"'; } ?>/>
+                    </a>
+                </li>
+                <li>
+                    <a href="?page=ocean48">
+                       <img src="assets/img/ocean48.jpg" alt="Ocean48 Bistro" <?php if ($_GET["page"] == "ocean48") { echo 'class="selected"'; } ?>/>
+                    </a>
+                </li>
+                <li>
+                    <a href="?page=krcma">
+                       <img src="assets/img/krcma.jpg" alt="Krčma u svatého Václava" <?php if ($_GET["page"] == "krcma") { echo 'class="selected"'; } ?>/>
+                    </a>
+                </li>
+            </ul>
+	</header>
+	<hr>
+	<content>

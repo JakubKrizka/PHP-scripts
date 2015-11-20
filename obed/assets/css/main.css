@@ -1,0 +1,51 @@
+body {
+	color:black;
+	background-color: #E1E1FC;
+	background-image: url(http://www.transparenttextures.com/patterns/45-degree-fabric-dark.png);
+	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+	font-weight: normal;
+}
+
+content {
+	font-size: 1.3em;
+}
+
+#home-button {
+	position: fixed;
+	top: 19px;
+	left: 19px;
+	color: black;
+}
+
+header ul {
+	text-align: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+header ul li {
+    display: inline-block;
+    margin: 15px;
+}
+
+img {
+	height: 99px;
+	
+}
+
+
+.box {
+	text-align: center;
+	display: inline-block;
+}
+
+.selected {
+	-webkit-box-shadow: 0 0 25px 9px rgba(0,0,255,0.6);
+	-moz-box-shadow: 0 0 25px 9px rgba(0,0,255,0.6);
+	box-shadow: 0 0 25px 9px rgba(0,0,255,0.6);
+}
+
+.selected-icon {
+	color: rgb(0,0,255);
+}
